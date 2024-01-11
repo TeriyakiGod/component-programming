@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Sprawozdanie Programowanie Komponentowe}
+\author{Kacper Ochnik}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Opis Zadania Programistycznego}
+
+Niniejsze sprawozdanie opisuje implementację aplikacji komponentowej która składa się z komponentu kalkulatora oraz aplikacji testującej.
+Natomiast kalkulator posiada komponent z funkcjami matematycznymi, takimi jak dodawanie, odejmowanie, mnożenie i dzielenie.
+
+\section*{2. Aplikacja - Kalkulator}
+
+Aplikacja skupia się głównie na funkcjonalności kalkulatora, implementowanej w komponencie kalkulatora.
+
+\section*{3. Komponent Kalkulator – Ogólny Opis}
+
+Komponent kalkulatora został zaprojektowany do obsługi podstawowych operacji matematycznych i przechowywania wyników.
+
+\section*{4. Zmienne Prywatne i Ich Znaczenie}
+
+Zmienne prywatne komponentu to m.in. liczba\_1, liczba\_2, operacja, wynik, które przechowują odpowiednie wartości.
+
+\section*{5. Funkcje Dostępowe do Zmiennych Prywatnych}
+
+Komponent udostępnia funkcje dostępowe, takie jak getLiczba1(), getLiczba2(), getWynik(), które umożliwiają dostęp do prywatnych zmiennych.
+
+\section*{6. Przykłady Wywołań Setterów/Getterów Komponentu}
+
+Przykładowe wywołania getterów i setterów można znaleźć poniżej:
+
+\begin{verbatim}
+kalkulator.setLiczba1(10);
+kalkulator.setLiczba2(5);
+int wynik = kalkulator.getWynik();
+\end{verbatim}
+
+\section*{7. Serializacja}
+
+Komponent obsługuje serializację danych, co umożliwia zapis i odczyt stanu kalkulatora.
+
+\section*{8. Cechy Komponentu plus Fragmenty Kodu}
+
+Komponent posiada funkcje do dodawania, odejmowania, mnożenia i dzielenia. Poniżej fragment kodu operacji dodawania:
+
+\begin{verbatim}
+public int dodaj() {
+    wynik = liczba_1 + liczba_2;
+    return wynik;
+}
+\end{verbatim}
+
+\section*{9. Testy Komponentu (Przypadki Testowe)}
+
+Przeprowadzono testy jednostkowe, sprawdzające poprawność działania każdej z operacji kalkulatora.
+
+\section*{10. Aplikacja Testująca Komponent}
+
+Stworzono prostą aplikację testującą, która wykorzystuje komponent kalkulatora do przeprowadzania różnych operacji.
+
+\section*{11. Przykład Wykorzystania Komponentu w Wybranej Aplikacji}
+
+Komponent kalkulatora został użyty w aplikacji do obsługi obliczeń matematycznych, np. przy fakturach.
+
+\section*{12. Wnioski}
+
+Implementacja kalkulatora jako komponentu jest skutecznym rozwiązaniem umożliwiającym łatwe dodawanie funkcji matematycznych do aplikacji. Testy potwierdzają poprawność działania komponentu.
+
+\end{document}

@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/teriyakigod/component-programming/Math/Math.jar"
+    ]
+}

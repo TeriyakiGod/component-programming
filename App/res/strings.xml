@@ -1,0 +1,29 @@
+<strings>
+    <string name="calculator">Calculator</string>
+    <string name="num1Field">num1Field</string>
+    <string name="num2Field">num2Field</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="multiply">*</string>
+    <string name="divide">/</string>
+    <string name="pi">pi</string>
+    <string name="e">e</string>
+    <string name="clear">clear</string>
+    <string name="color">color</string>
+    <string name="verbose">Verbose</string>
+    <string name="divisionByWarning">Division by zero warning</string>
+    <string name="warnIfNumberBiggerThan">Warn if number bigger than</string>
+    <string name="warnIfNumberSmallerThan">Warn if number smaller than</string>
+    <string name="plusButton">plusButton</string>
+    <string name="minusButton">minusButton</string>
+    <string name="multiplyButton">mulButton</string>
+    <string name="divideButton">divButton</string>
+    <string name="piButton">piButton</string>
+    <string name="eButton">eButton</string>
+    <string name="clearButton">clearButton</string>
+    <string name="colorButton">colorButton</string>
+    <string name="componentList">componentList</string>
+    <string name="divisionByZero">Division by zero</string>
+    <string name="resultLabel">Result: </string>
+    <string name="chooseColor">Choose a color</string>
+</strings>

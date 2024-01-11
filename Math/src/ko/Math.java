@@ -1,5 +1,6 @@
 package ko;
-    public class Math {
+
+public class Math {
     public static final double PI = 3.14159265359;
     public static final double e = 2.71828;
     private static boolean divisionByZeroWarning = false;
@@ -8,7 +9,6 @@ package ko;
     private static double warningNumberBig;
     private static double warningNumberSmall;
     private static boolean isVerbose;
-    private static int verboseColor = 0;
 
     public static double add(double a, double b) {
         double result = a + b;
@@ -25,7 +25,8 @@ package ko;
     }
 
     public static double div(double a, double b) {
-        if (isZero(b)) return 0;
+        if (isZero(b))
+            return 0;
         double result = a / b;
         checkWarnings(result);
         verbose(a, b, '/', result);
@@ -53,33 +54,30 @@ package ko;
         warningNumberSmall = number;
     }
 
-    public static void setVerbose(boolean bool){
+    public static void setVerbose(boolean bool) {
         isVerbose = bool;
     }
 
-    public static void verbose(double a, double b, char operator, double result){
-        if (isVerbose){
-            String color = "\u001B[" + verboseColor;
-            System.out.println(color + "m" + a + " " + operator + " " + b + " = " + result + "\u001B[0m");
+    public static void verbose(double a, double b, char operator, double result) {
+        if (isVerbose) {
+
+            System.out.println(a + " " + operator + " " + b + " = " + result);
         }
     }
 
-    public static void setVerboseColor(int color){
-        verboseColor = color;
-    }
-
-    private static void checkWarnings(double number){
-        if (warnIfNumberBiggerThan && warningNumberBig < number){
+    private static void checkWarnings(double number) {
+        if (warnIfNumberBiggerThan && warningNumberBig < number) {
             System.out.println("Warning result is bigger than: " + warningNumberBig);
         }
-        if (warnIfNumberSmallerThan && warningNumberSmall > number){
+        if (warnIfNumberSmallerThan && warningNumberSmall > number) {
             System.out.println("Warning result is smaller than: " + warningNumberSmall);
         }
     }
 
-    private static boolean isZero(double number){
+    private static boolean isZero(double number) {
         if (number == 0) {
-            if (divisionByZeroWarning) System.out.println("Division by 0!");
+            if (divisionByZeroWarning)
+                System.out.println("Division by 0!");
             return true;
         }
         return false;

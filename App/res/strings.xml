@@ -27,4 +27,5 @@
     <string name="resultLabel">Result: </string>
     <string name="chooseColor">Choose a color</string>
     <string name="stats">Stats</string>
+    <string name="history">History</string>
 </strings>

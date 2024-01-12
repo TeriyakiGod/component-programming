@@ -3,7 +3,6 @@ package ko;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.DefaultCaret;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +14,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+
 
 /**
  * The Calculator class represents a calculator window.
@@ -25,8 +26,6 @@ public class Calculator extends JFrame {
 	// TODO: Report
 	// TODO: Wykorzystaj kalkulator w innej aplikacji / Zaproponuj uzycie
 	// kalkulatora w innej aplikacji
-	// TODO: 10 functions + 10 non-functions
-	// TODO: testing 2 reczne 1 automatyczny
 	private JTextField num1Field, num2Field, warningNumberBigField, warningNumberSmallField;
 	private JButton plusButton, minusButton, mulButton, divButton, piButton, eButton, clearButton, colorButton,
 			statsButton;
@@ -39,6 +38,8 @@ public class Calculator extends JFrame {
 	private JComponent selectedComponent = null;
 
 	private JTextArea outputField;
+
+	private static double currentResult = 0;
 
 	/**
 	 * Represents a window for a calculator application.
@@ -53,7 +54,7 @@ public class Calculator extends JFrame {
 		Map<String, String> strings = Xml.readStringsFromXml("App/res/strings.xml");
 		Stats.initStats();
 		setTitle(strings.get("title"));
-		setSize(700, 500);
+		setSize(700, 550);
 		// set location to center
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,9 +70,7 @@ public class Calculator extends JFrame {
 		clearButton = new JButton(strings.get("clear"));
 		colorButton = new JButton(strings.get("color"));
 		statsButton = new JButton(strings.get("stats"));
-		outputField = new JTextArea("output\n");
-		DefaultCaret caret = (DefaultCaret) outputField.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		outputField = new JTextArea(strings.get("history"));
 		outputField.setEditable(false);
 		verboseCheckbox = new JCheckBox(strings.get("verbose"));
 		divisionByWarningCheckbox = new JCheckBox(strings.get("divisionByWarning"));
@@ -79,6 +78,8 @@ public class Calculator extends JFrame {
 		warnIfNumberSmallerThanCheckbox = new JCheckBox(strings.get("warnIfNumberSmallerThan"));
 		warningNumberBigField = new JTextField(10);
 		warningNumberSmallField = new JTextField(10);
+
+
 
 		PrintStream printStream = new PrintStream(new OutputStream() {
 			@Override

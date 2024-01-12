@@ -9,6 +9,10 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 public class Xml {
     static public Map<String, String> readStringsFromXml(String filePath) {
@@ -33,5 +37,23 @@ public class Xml {
             e.printStackTrace();
         }
         return strings;
+    }
+    static public void saveToFile(String filename, String input) {
+        try {
+            FileWriter fileWriter = new FileWriter(filename, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            PrintWriter printWriter = new PrintWriter(bufferedWriter);
+
+            printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            printWriter.println("<data>");
+            printWriter.println(input);
+            printWriter.println("</data>");
+
+            printWriter.close();
+            bufferedWriter.close();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -28,7 +28,8 @@ public class Calculator extends JFrame {
 	// TODO: 10 functions + 10 non-functions
 	// TODO: testing 2 reczne 1 automatyczny
 	private JTextField num1Field, num2Field, warningNumberBigField, warningNumberSmallField;
-	private JButton plusButton, minusButton, mulButton, divButton, piButton, eButton, clearButton, colorButton;
+	private JButton plusButton, minusButton, mulButton, divButton, piButton, eButton, clearButton, colorButton,
+			statsButton;
 	private JTextField lastSelectedField = null;
 	private JCheckBox verboseCheckbox, divisionByWarningCheckbox, warnIfNumberBiggerThanCheckbox,
 			warnIfNumberSmallerThanCheckbox;
@@ -47,9 +48,12 @@ public class Calculator extends JFrame {
 	 * selected components.
 	 */
 	public Calculator() {
-		super("Calculator");
+		super();
+		Stats.setStartTime();
 		Map<String, String> strings = Xml.readStringsFromXml("App/res/strings.xml");
-		setSize(600, 400);
+		Stats.initStats();
+		setTitle(strings.get("title"));
+		setSize(700, 500);
 		// set location to center
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +68,8 @@ public class Calculator extends JFrame {
 		eButton = new JButton(strings.get("e"));
 		clearButton = new JButton(strings.get("clear"));
 		colorButton = new JButton(strings.get("color"));
-		outputField = new JTextArea();
+		statsButton = new JButton(strings.get("stats"));
+		outputField = new JTextArea("output\n");
 		DefaultCaret caret = (DefaultCaret) outputField.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		outputField.setEditable(false);
@@ -74,28 +79,6 @@ public class Calculator extends JFrame {
 		warnIfNumberSmallerThanCheckbox = new JCheckBox(strings.get("warnIfNumberSmallerThan"));
 		warningNumberBigField = new JTextField(10);
 		warningNumberSmallField = new JTextField(10);
-
-		listModel = new DefaultListModel<>();
-		componentList = new JList<>(listModel);
-
-		listModel.addElement(strings.get("num1Field"));
-		listModel.addElement(strings.get("num2Field"));
-		listModel.addElement(strings.get("plusButton"));
-		listModel.addElement(strings.get("minusButton"));
-		listModel.addElement(strings.get("multiply"));
-		listModel.addElement(strings.get("divide"));
-		listModel.addElement(strings.get("piButton"));
-		listModel.addElement(strings.get("eButton"));
-		listModel.addElement(strings.get("clearButton"));
-		listModel.addElement(strings.get("colorButton"));
-		listModel.addElement(strings.get("componentList"));
-		listModel.addElement(strings.get("outputField"));
-		listModel.addElement(strings.get("verboseCheckbox"));
-		listModel.addElement(strings.get("divisionByWarningCheckbox"));
-		listModel.addElement(strings.get("warnIfNumberBiggerThanCheckbox"));
-		listModel.addElement(strings.get("warnIfNumberSmallerThanCheckbox"));
-		listModel.addElement(strings.get("warningNumberBigField"));
-		listModel.addElement(strings.get("warningNumberSmallField"));
 
 		PrintStream printStream = new PrintStream(new OutputStream() {
 			@Override
@@ -122,15 +105,33 @@ public class Calculator extends JFrame {
 
 		warnIfNumberBiggerThanCheckbox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Math.setWarnIfNumberBiggerThan(warnIfNumberBiggerThanCheckbox.isSelected(),
-						Double.parseDouble(warningNumberBigField.getText()));
+				String text = warningNumberBigField.getText();
+				double value = (text == null || text.isEmpty()) ? 0 : Double.parseDouble(text);
+				Math.setWarnIfNumberBiggerThan(warnIfNumberBiggerThanCheckbox.isSelected(), value);
 			}
 		});
 
 		warnIfNumberSmallerThanCheckbox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Math.setWarnIfNumberSmallerThan(warnIfNumberSmallerThanCheckbox.isSelected(),
-						Double.parseDouble(warningNumberSmallField.getText()));
+				String text = warningNumberSmallField.getText();
+				double value = (text == null || text.isEmpty()) ? 0 : Double.parseDouble(text);
+				Math.setWarnIfNumberSmallerThan(warnIfNumberSmallerThanCheckbox.isSelected(), value);
+			}
+		});
+
+		warningNumberBigField.addFocusListener(new FocusAdapter() {
+			public void focusLost(FocusEvent e) {
+				String text = warningNumberBigField.getText();
+				double value = (text == null || text.isEmpty()) ? 0 : Double.parseDouble(text);
+				Math.setWarnIfNumberBiggerThan(warnIfNumberBiggerThanCheckbox.isSelected(), value);
+			}
+		});
+
+		warningNumberSmallField.addFocusListener(new FocusAdapter() {
+			public void focusLost(FocusEvent e) {
+				String text = warningNumberSmallField.getText();
+				double value = (text == null || text.isEmpty()) ? 0 : Double.parseDouble(text);
+				Math.setWarnIfNumberSmallerThan(warnIfNumberSmallerThanCheckbox.isSelected(), value);
 			}
 		});
 
@@ -141,8 +142,10 @@ public class Calculator extends JFrame {
 				double num1 = num1Text.isEmpty() ? 0 : Double.parseDouble(num1Text);
 				double num2 = num2Text.isEmpty() ? 0 : Double.parseDouble(num2Text);
 				double result = Math.add(num1, num2);
-
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
+				Stats.checkLargestNumber(result);
+				Stats.checkSmallestNumber(result);
+				Stats.bumpAdditions();
 			}
 		});
 
@@ -154,6 +157,9 @@ public class Calculator extends JFrame {
 				double num2 = num2Text.isEmpty() ? 0 : Double.parseDouble(num2Text);
 				double result = Math.sub(num1, num2);
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
+				Stats.checkLargestNumber(result);
+				Stats.checkSmallestNumber(result);
+				Stats.bumpSubtractions();
 			}
 		});
 
@@ -165,6 +171,9 @@ public class Calculator extends JFrame {
 				double num2 = num2Text.isEmpty() ? 0 : Double.parseDouble(num2Text);
 				double result = Math.mul(num1, num2);
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
+				Stats.checkLargestNumber(result);
+				Stats.checkSmallestNumber(result);
+				Stats.bumpMultiplications();
 			}
 		});
 
@@ -176,10 +185,15 @@ public class Calculator extends JFrame {
 				double num2 = num2Text.isEmpty() ? 0 : Double.parseDouble(num2Text);
 				if (num2 == 0 && divisionByWarningCheckbox.isSelected()) {
 					JOptionPane.showMessageDialog(null, strings.get("divisionByWarning"));
+					Stats.bumpDivisionsByZero();
+					Stats.bumpDivisions();
 					return;
 				}
 				double result = Math.div(num1, num2);
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
+				Stats.checkLargestNumber(result);
+				Stats.checkSmallestNumber(result);
+				Stats.bumpDivisions();
 			}
 		});
 
@@ -199,6 +213,7 @@ public class Calculator extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (lastSelectedField != null) {
 					lastSelectedField.setText(String.valueOf(Math.PI));
+					Stats.bumpPi();
 				}
 			}
 		});
@@ -207,6 +222,7 @@ public class Calculator extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (lastSelectedField != null) {
 					lastSelectedField.setText(String.valueOf(Math.e));
+					Stats.bumpE();
 				}
 			}
 		});
@@ -218,25 +234,32 @@ public class Calculator extends JFrame {
 			}
 		});
 
+		statsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Stats.showStats();
+			}
+		});
+
+		listModel = new DefaultListModel<>();
+		componentList = new JList<>(listModel);
 		Map<String, JComponent> componentMap = new HashMap<>();
-		componentMap.put("num1Field", num1Field);
-		componentMap.put("num2Field", num2Field);
-		componentMap.put("plusButton", plusButton);
-		componentMap.put("minusButton", minusButton);
-		componentMap.put("mulButton", mulButton);
-		componentMap.put("divButton", divButton);
-		componentMap.put("piButton", piButton);
-		componentMap.put("eButton", eButton);
-		componentMap.put("clearButton", clearButton);
-		componentMap.put("colorButton", colorButton);
-		componentMap.put("componentList", componentList);
-		componentMap.put("outputField", outputField);
-		componentMap.put("verboseCheckbox", verboseCheckbox);
-		componentMap.put("divisionByWarningCheckbox", divisionByWarningCheckbox);
-		componentMap.put("warnIfNumberBiggerThanCheckbox", warnIfNumberBiggerThanCheckbox);
-		componentMap.put("warnIfNumberSmallerThanCheckbox", warnIfNumberSmallerThanCheckbox);
-		componentMap.put("warningNumberBigField", warningNumberBigField);
-		componentMap.put("warningNumberSmallField", warningNumberSmallField);
+
+		String[] componentNames = {
+				"num1Field", "num2Field", "plusButton", "minusButton", "mulButton", "divButton",
+				"piButton", "eButton", "clearButton", "colorButton", "componentList", "outputField",
+				"verboseCheckbox", "divisionByWarningCheckbox", "warnIfNumberBiggerThanCheckbox",
+				"warnIfNumberSmallerThanCheckbox", "warningNumberBigField", "warningNumberSmallField"
+		};
+
+		try {
+			for (String componentName : componentNames) {
+				listModel.addElement(componentName);
+				componentMap.put(componentName, (JComponent) getClass().getDeclaredField(componentName).get(this));
+			}
+		} catch (NoSuchFieldException | IllegalAccessException e) {
+			// Handle the exceptions here
+			e.printStackTrace();
+		}
 
 		componentList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -267,16 +290,23 @@ public class Calculator extends JFrame {
 		add(eButton);
 		add(new JScrollPane(componentList));
 		add(colorButton);
-
+		add(statsButton);
+		add(clearButton);
 		add(verboseCheckbox);
 		add(new JScrollPane(outputField));
-
-		add(divisionByWarningCheckbox);
-		add(clearButton);
 		add(warnIfNumberBiggerThanCheckbox);
 		add(warningNumberBigField);
 		add(warnIfNumberSmallerThanCheckbox);
 		add(warningNumberSmallField);
+
+		add(divisionByWarningCheckbox);
+
+		JComponent author = new JLabel("Kacper Ochnik 2024");
+		((JLabel) author).setHorizontalAlignment(SwingConstants.CENTER);
+
+		add(author);
+
+		setResizable(false);
 
 		setVisible(true);
 	}

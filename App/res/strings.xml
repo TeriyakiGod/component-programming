@@ -1,5 +1,5 @@
 <strings>
-    <string name="calculator">Calculator</string>
+    <string name="title">Calculator</string>
     <string name="num1Field">num1Field</string>
     <string name="num2Field">num2Field</string>
     <string name="plus">+</string>
@@ -10,7 +10,7 @@
     <string name="e">e</string>
     <string name="clear">clear</string>
     <string name="color">color</string>
-    <string name="verbose">Verbose</string>
+    <string name="verbose">History</string>
     <string name="divisionByWarning">Division by zero warning</string>
     <string name="warnIfNumberBiggerThan">Warn if number bigger than</string>
     <string name="warnIfNumberSmallerThan">Warn if number smaller than</string>
@@ -26,4 +26,5 @@
     <string name="divisionByZero">Division by zero</string>
     <string name="resultLabel">Result: </string>
     <string name="chooseColor">Choose a color</string>
+    <string name="stats">Stats</string>
 </strings>

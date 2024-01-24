@@ -9,35 +9,54 @@ public class Math {
     private static double warningNumberBig;
     private static double warningNumberSmall;
     private static boolean isVerbose;
+    private static double a;
+    private static double b;
+    private static double result;
 
-    public static double add(double a, double b) {
-        double result = a + b;
+    public static double getA() {
+        return a;
+    }
+
+    public static void setA(double value) {
+        a = value;
+    }
+
+    public static double getB() {
+        return b;
+    }
+
+    public static void setB(double value) {
+        b = value;
+    }
+
+    public static double getResult() {
+        return result;
+    }
+
+    public static void add() {
+        result = a + b;
         checkWarnings(result);
         verbose(a, b, '+', result);
-        return result;
     }
 
-    public static double sub(double a, double b) {
-        double result = a - b;
+    public static void sub() {
+        result = a - b;
         checkWarnings(result);
         verbose(a, b, '-', result);
-        return result;
     }
 
-    public static double div(double a, double b) {
+    public static void div() {
         if (isZero(b))
-            return 0;
-        double result = a / b;
+            return;
+        result = a / b;
         checkWarnings(result);
         verbose(a, b, '/', result);
-        return result;
     }
 
-    public static double mul(double a, double b) {
-        double result = a * b;
+    public static void mul() {
+        result = a * b;
         checkWarnings(result);
         verbose(a, b, '*', result);
-        return result;
     }
 
     public static void setDivisionByZeroWarning(boolean bool) {
@@ -60,7 +79,6 @@ public class Math {
 
     public static void verbose(double a, double b, char operator, double result) {
         if (isVerbose) {
-
             System.out.println(a + " " + operator + " " + b + " = " + result);
         }
     }

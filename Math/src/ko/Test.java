@@ -7,10 +7,30 @@ public class Test {
         Math.setDivisionByZeroWarning(true);
         Math.setWarnIfNumberBiggerThan(true, 10);
         Math.setWarnIfNumberSmallerThan(true, 0);
-        Math.add(Math.PI, 10);
-        Math.sub(0, Math.e);
-        Math.div(2, 0);
-        Math.mul(2, 2);
-        Math.div(2, 2);
+        Math.setA(0);
+        Math.setB(0);
+        Math.add();
+        Math.sub();
+        Math.div();
+        Math.mul();
+        Math.setA(1);
+        Math.setB(1);
+        Math.add();
+        Math.sub();
+        Math.div();
+        Math.mul();
+        Math.setA(-2);
+        Math.setB(2);
+        Math.add();
+        Math.sub();
+        Math.div();
+        Math.mul();
+        Math.setA(-3);
+        Math.setB(-5);
+        Math.add();
+        Math.sub();
+        Math.div();
+        Math.mul();
     }
+
 }

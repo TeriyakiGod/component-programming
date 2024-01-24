@@ -9,13 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
-
 
 /**
  * The Calculator class represents a calculator window.
@@ -23,9 +23,6 @@ import java.util.List;
  * performing mathematical calculations.
  */
 public class Calculator extends JFrame {
-	// TODO: Report
-	// TODO: Wykorzystaj kalkulator w innej aplikacji / Zaproponuj uzycie
-	// kalkulatora w innej aplikacji
 	private JTextField num1Field, num2Field, warningNumberBigField, warningNumberSmallField;
 	private JButton plusButton, minusButton, mulButton, divButton, piButton, eButton, clearButton, colorButton,
 			statsButton;
@@ -38,8 +35,6 @@ public class Calculator extends JFrame {
 	private JComponent selectedComponent = null;
 
 	private JTextArea outputField;
-
-	private static double currentResult = 0;
 
 	/**
 	 * Represents a window for a calculator application.
@@ -70,7 +65,7 @@ public class Calculator extends JFrame {
 		clearButton = new JButton(strings.get("clear"));
 		colorButton = new JButton(strings.get("color"));
 		statsButton = new JButton(strings.get("stats"));
-		outputField = new JTextArea(strings.get("history"));
+		outputField = new JTextArea("History:\n", 10, 50);
 		outputField.setEditable(false);
 		verboseCheckbox = new JCheckBox(strings.get("verbose"));
 		divisionByWarningCheckbox = new JCheckBox(strings.get("divisionByWarning"));
@@ -78,8 +73,6 @@ public class Calculator extends JFrame {
 		warnIfNumberSmallerThanCheckbox = new JCheckBox(strings.get("warnIfNumberSmallerThan"));
 		warningNumberBigField = new JTextField(10);
 		warningNumberSmallField = new JTextField(10);
-
-
 
 		PrintStream printStream = new PrintStream(new OutputStream() {
 			@Override
@@ -142,7 +135,10 @@ public class Calculator extends JFrame {
 				String num2Text = num2Field.getText();
 				double num1 = num1Text.isEmpty() ? 0 : Double.parseDouble(num1Text);
 				double num2 = num2Text.isEmpty() ? 0 : Double.parseDouble(num2Text);
-				double result = Math.add(num1, num2);
+				Math.setA(num2);
+				Math.setB(num1);
+				Math.add();
+				double result = Math.getResult();
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
 				Stats.checkLargestNumber(result);
 				Stats.checkSmallestNumber(result);
@@ -156,7 +152,10 @@ public class Calculator extends JFrame {
 				String num2Text = num2Field.getText();
 				double num1 = num1Text.isEmpty() ? 0 : Double.parseDouble(num1Text);
 				double num2 = num2Text.isEmpty() ? 0 : Double.parseDouble(num2Text);
-				double result = Math.sub(num1, num2);
+				Math.setA(num2);
+				Math.setB(num1);
+				Math.sub();
+				double result = Math.getResult();
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
 				Stats.checkLargestNumber(result);
 				Stats.checkSmallestNumber(result);
@@ -170,7 +169,10 @@ public class Calculator extends JFrame {
 				String num2Text = num2Field.getText();
 				double num1 = num1Text.isEmpty() ? 0 : Double.parseDouble(num1Text);
 				double num2 = num2Text.isEmpty() ? 0 : Double.parseDouble(num2Text);
-				double result = Math.mul(num1, num2);
+				Math.setA(num2);
+				Math.setB(num1);
+				Math.mul();
+				double result = Math.getResult();
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
 				Stats.checkLargestNumber(result);
 				Stats.checkSmallestNumber(result);
@@ -190,7 +192,10 @@ public class Calculator extends JFrame {
 					Stats.bumpDivisions();
 					return;
 				}
-				double result = Math.div(num1, num2);
+				Math.setA(num2);
+				Math.setB(num1);
+				Math.div();
+				double result = Math.getResult();
 				JOptionPane.showMessageDialog(null, strings.get("resultLabel") + result);
 				Stats.checkLargestNumber(result);
 				Stats.checkSmallestNumber(result);
@@ -310,6 +315,22 @@ public class Calculator extends JFrame {
 		setResizable(false);
 
 		setVisible(true);
+	}
+
+	/**
+	 * Saves the state of the calculator to a file.
+	 * The state includes the current result and the values in the input fields.
+	 *
+	 * @param filePath The path of the file to save the state to.
+	 */
+	public void saveState(String filePath) {
+		try (FileOutputStream fileOut = new FileOutputStream(filePath);
+				ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+			objectOut.writeObject(this);
+			System.out.println("Calculator state saved to " + filePath);
+		} catch (IOException e) {
+			System.err.println("Failed to save calculator state: " + e.getMessage());
+		}
 	}
 
 	public static void main(String[] args) {

@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1706108470 "/home/teriyakigod/component-programming/App/doc/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1706108471 0
+["pdflatex"] 1706448006 "/home/teriyakigod/component-programming/App/doc/sprawozdanie/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1706448007 0
   "/etc/texmf/web2c/texmf.cnf" 1704998963 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/teriyakigod/.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1706104300 31928 8a4b8db7aaa75229aedb1754110a4b2c ""
   "/home/teriyakigod/.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1706102848 40112 16f4359231e6e35c3fdf55017fa42ecd ""
@@ -8,7 +8,7 @@
   "/home/teriyakigod/.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk" 1706102849 42496 65db5921004d5c3953d4f3842a165b32 ""
   "/home/teriyakigod/.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk" 1706102848 20008 12f166a8c0a474ce8c5ed3de36d9765a ""
   "/home/teriyakigod/.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1706102400 11524 678468ceb7b8d0965d8a06b8878b1981 ""
-  "/home/teriyakigod/component-programming/App/doc/sprawozdanie/sprawozdanie.tex" 1706108470 7438 d20b2381bf7df2ce9b0fe1ac85a7f41f ""
+  "/home/teriyakigod/component-programming/App/doc/sprawozdanie/sprawozdanie.tex" 1706448006 9513 2b9f5e856f76e9a4998f4737bed210b9 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm" 1136768653 3584 adb004a0c8e7c46ee66cad73671f37b4 ""
@@ -51,8 +51,8 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1706103563 131897 233cf92002ab1e8b40f7ea1478ce84f3 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1706103569 6488043 c74b675877754cecac28c774da456781 ""
   "img/ui.png" 1706101792 12013 43a88a2ef6fe9fe7a1ae77fdb172b53d ""
-  "sprawozdanie.aux" 1706108471 282 e74ea4be0d881a6b2141b75bab98e430 "pdflatex"
-  "sprawozdanie.tex" 1706108470 7438 d20b2381bf7df2ce9b0fe1ac85a7f41f ""
+  "sprawozdanie.aux" 1706448007 401 96b0e34e2a03eebb8a83501b870db769 "pdflatex"
+  "sprawozdanie.tex" 1706448006 9513 2b9f5e856f76e9a4998f4737bed210b9 ""
   (generated)
   "sprawozdanie.aux"
   "sprawozdanie.log"

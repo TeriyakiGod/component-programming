@@ -1,6 +1,5 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "Math/Math.jar"
+        "lib/**/*.jar"
     ]
 }

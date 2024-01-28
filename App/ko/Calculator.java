@@ -9,9 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -25,9 +24,9 @@ import java.util.Map;
 public class Calculator extends JFrame {
 	private JTextField num1Field, num2Field, warningNumberBigField, warningNumberSmallField;
 	private JButton plusButton, minusButton, mulButton, divButton, piButton, eButton, clearButton, colorButton,
-			statsButton;
+			statsButton, saveHistoryButton;
 	private JTextField lastSelectedField = null;
-	private JCheckBox verboseCheckbox, divisionByWarningCheckbox, warnIfNumberBiggerThanCheckbox,
+	private JCheckBox divisionByWarningCheckbox, warnIfNumberBiggerThanCheckbox,
 			warnIfNumberSmallerThanCheckbox;
 
 	private JList<String> componentList;
@@ -35,6 +34,8 @@ public class Calculator extends JFrame {
 	private JComponent selectedComponent = null;
 
 	private JTextArea outputField;
+
+	private String statePath = "App/ko/calculator_state.ser";
 
 	/**
 	 * Represents a window for a calculator application.
@@ -46,6 +47,7 @@ public class Calculator extends JFrame {
 	public Calculator() {
 		super();
 		Stats.setStartTime();
+		Math.setVerbose(true);
 		Map<String, String> strings = Xml.readStringsFromXml("App/res/strings.xml");
 		Stats.initStats();
 		setTitle(strings.get("title"));
@@ -67,7 +69,7 @@ public class Calculator extends JFrame {
 		statsButton = new JButton(strings.get("stats"));
 		outputField = new JTextArea("History:\n", 10, 50);
 		outputField.setEditable(false);
-		verboseCheckbox = new JCheckBox(strings.get("verbose"));
+		saveHistoryButton = new JButton(strings.get("saveHistory"));
 		divisionByWarningCheckbox = new JCheckBox(strings.get("divisionByWarning"));
 		warnIfNumberBiggerThanCheckbox = new JCheckBox(strings.get("warnIfNumberBiggerThan"));
 		warnIfNumberSmallerThanCheckbox = new JCheckBox(strings.get("warnIfNumberSmallerThan"));
@@ -85,9 +87,20 @@ public class Calculator extends JFrame {
 
 		System.setOut(printStream);
 
-		verboseCheckbox.addActionListener(new ActionListener() {
+		saveHistoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Math.setVerbose(verboseCheckbox.isSelected());
+				String output = outputField.getText();
+				String fileName = JOptionPane.showInputDialog(null, "Enter the filename:");
+				if (fileName != null && !fileName.isEmpty()) {
+					try {
+						FileWriter fileWriter = new FileWriter(fileName);
+						fileWriter.write(output);
+						fileWriter.close();
+						JOptionPane.showMessageDialog(null, "Output saved to " + fileName);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+				}
 			}
 		});
 
@@ -253,7 +266,7 @@ public class Calculator extends JFrame {
 		String[] componentNames = {
 				"num1Field", "num2Field", "plusButton", "minusButton", "mulButton", "divButton",
 				"piButton", "eButton", "clearButton", "colorButton", "componentList", "outputField",
-				"verboseCheckbox", "divisionByWarningCheckbox", "warnIfNumberBiggerThanCheckbox",
+				"divisionByWarningCheckbox", "warnIfNumberBiggerThanCheckbox",
 				"warnIfNumberSmallerThanCheckbox", "warningNumberBigField", "warningNumberSmallField"
 		};
 
@@ -298,7 +311,7 @@ public class Calculator extends JFrame {
 		add(colorButton);
 		add(statsButton);
 		add(clearButton);
-		add(verboseCheckbox);
+		add(saveHistoryButton);
 		add(new JScrollPane(outputField));
 		add(warnIfNumberBiggerThanCheckbox);
 		add(warningNumberBigField);
@@ -315,25 +328,5 @@ public class Calculator extends JFrame {
 		setResizable(false);
 
 		setVisible(true);
-	}
-
-	/**
-	 * Saves the state of the calculator to a file.
-	 * The state includes the current result and the values in the input fields.
-	 *
-	 * @param filePath The path of the file to save the state to.
-	 */
-	public void saveState(String filePath) {
-		try (FileOutputStream fileOut = new FileOutputStream(filePath);
-				ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-			objectOut.writeObject(this);
-			System.out.println("Calculator state saved to " + filePath);
-		} catch (IOException e) {
-			System.err.println("Failed to save calculator state: " + e.getMessage());
-		}
-	}
-
-	public static void main(String[] args) {
-		new Calculator();
 	}
 }

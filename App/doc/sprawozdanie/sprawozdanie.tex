@@ -146,26 +146,47 @@ Posiada on również opcje personalizacji np. możemy włączyć słowne wypisyw
 
 \section*{9. Testy Komponentu (Przypadki Testowe)}
 
-Przeprowadzono testy jednostkowe, sprawdzające poprawność działania każdej z operacji kalkulatora.
-Testy potwierdzają poprawność działania komponentu.
-Przypadki testowe:
+Przeprowadzono testy jednostkowe dla komponentu Math. Poniżej przedstawiono przypadki testowe.
 
-\begin{itemize}
-    \item Dodawanie liczb dodatnich
-    \item Dodawanie liczb ujemnych
-    \item Dodawanie liczb zmiennoprzecinkowych
-    \item Odejmowanie liczb dodatnich
-    \item Odejmowanie liczb ujemnych
-    \item Odejmowanie liczb zmiennoprzecinkowych
-    \item Mnożenie liczb dodatnich
-    \item Mnożenie liczb ujemnych
-    \item Mnożenie liczb zmiennoprzecinkowych
-    \item Dzielenie liczb dodatnich
-    \item Dzielenie liczb ujemnych
-    \item Dzielenie liczb zmiennoprzecinkowych
-    \item Dzielenie przez zero
-    \item Dzielenie przez zero z ostrzeżeniem
-\end{itemize}
+\begin{table}[htbp]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|c|p{2.5cm}|p{3cm}|p{3cm}|p{3cm}|p{2cm}|}
+        \hline
+        ID & Opis & Warunki wejściowe & Opis działania & Oczekiwane wyniki & Rezultat \\
+        \hline
+        0 & Dodawanie liczb dodatnich & liczby a i b większe od zera & uruchomić funkcję Math.add() & Suma liczb a i b & Pozytywny \\
+        \hline
+        1 & Dodawanie liczb ujemnych & liczby a i b mniejsze od zera & uruchomić funkcję Math.add() & Suma liczb a i b & Pozytywny \\
+        \hline
+        2 & Dodawanie liczb ujemnych i dodatnich & liczba a mniejsza od zera, liczba b większa od zera & uruchomić funkcję Math.add() & Suma liczb a i b & Pozytywny \\
+        \hline
+        4 & Odejmowanie liczb dodatnich & liczba a większa od zera, liczba b mniejsza od a & uruchomić funkcję Math.sub() & Różnica liczb a i b & Pozytywny \\
+        \hline
+        5 & Odejmowanie liczb ujemnych & liczba a mniejsza od zera, liczba b większa od a & uruchomić funkcję Math.sub() & Różnica liczb a i b & Pozytywny \\
+        \hline
+        6 & Odejmowanie liczb ujemnych i dodatnich & liczba a większa od zera, liczba b mniejsza od zera & uruchomić funkcję Math.sub() & Różnica liczb a i b & Pozytywny \\
+        \hline
+        8 & Mnożenie liczb dodatnich & liczby a i b większe od zera & uruchomić funkcję Math.mul() & Iloczyn liczb a i b & Pozytywny \\
+        \hline
+        9 & Mnożenie liczb ujemnych & liczby a i b mniejsze od zera & uruchomić funkcję Math.mul() & Iloczyn liczb a i b & Pozytywny \\
+        \hline
+        10 & Mnożenie liczb ujemnych i dodatnich & liczba a mniejsza od zera, liczba b większa od zera & uruchomić funkcję Math.mul() & Iloczyn liczb a i b & Pozytywny \\
+        \hline
+        11 & Dzielenie liczb dodatnich & liczby a i b większe od zera, liczba b różna od zera & uruchomić funkcję Math.div() & Iloraz liczb a i b & Pozytywny \\
+        \hline
+        12 & Dzielenie liczb ujemnych & liczby a i b mniejsze od zera, liczba b różna od zera & uruchomić funkcję Math.div() & Iloraz liczb a i b & Pozytywny \\
+        \hline
+        13 & Dzielenie liczb ujemnych i dodatnich & liczba a mniejsza od zera, liczba b większa od zera, liczba b różna od zera & uruchomić funkcję Math.div() & Iloraz liczb a i b & Pozytywny \\
+        \hline
+        14 & Dzielenie przez zero & liczba a dowolna, liczba b równa zero & uruchomić funkcję Math.div() & Wyświetla się błąd & Pozytywny \\
+        \hline
+        15 & Test UI & brak & uruchomić aplikację i klikać na wszystkie guziki & Guziki wykonują poprawne funkcje & Pozytywny \\
+        \hline
+    \end{tabular}%
+    }
+    \caption{Przypadki testowe}
+\end{table}
 \newpage
 \section*{10. Aplikacja Testująca Komponent}
 
